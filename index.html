@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ValuePick helps you discover useful products, trending finds, and great-value shopping picks.">
+  <title>ValuePick | Great Products. Better Value.</title>
+  <style>
+    :root { --ink:#172033; --muted:#64748b; --brand:#2563eb; --brand2:#0f766e; --bg:#f7f9fc; --card:#fff; --line:#e5eaf2; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:var(--bg); }
+    a { color:inherit; text-decoration:none; }
+    .notice { background:#10213b; color:#fff; text-align:center; padding:9px 14px; font-size:13px; }
+    header { background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:10; }
+    .nav { max-width:1160px; margin:auto; padding:16px 22px; display:flex; align-items:center; gap:24px; }
+    .logo { font-weight:900; font-size:27px; letter-spacing:-1px; white-space:nowrap; }
+    .logo span { color:var(--brand); }
+    .search { flex:1; display:flex; }
+    .search input { width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:10px 0 0 10px; font-size:15px; outline:none; }
+    .search button { border:0; background:var(--brand); color:white; padding:0 18px; border-radius:0 10px 10px 0; font-weight:700; cursor:pointer; }
+    .nav-cta { font-weight:700; color:var(--brand); white-space:nowrap; }
+    main { max-width:1160px; margin:auto; padding:26px 22px 56px; }
+    .hero { background:linear-gradient(120deg,#10213b,#1d4ed8); color:white; border-radius:22px; padding:48px; display:grid; grid-template-columns:1.25fr .75fr; gap:24px; align-items:center; overflow:hidden; }
+    .eyebrow { text-transform:uppercase; letter-spacing:2px; font-size:12px; font-weight:800; color:#bfdbfe; }
+    h1 { font-size:clamp(34px,5vw,54px); line-height:1.05; margin:13px 0; letter-spacing:-1.8px; }
+    .hero p { color:#e2e8f0; font-size:17px; line-height:1.6; max-width:550px; }
+    .button { display:inline-block; margin-top:12px; background:#fff; color:#1d4ed8; padding:13px 19px; border-radius:10px; font-weight:800; }
+    .hero-art { min-height:205px; display:grid; place-items:center; font-size:112px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.15); border-radius:20px; }
+    .section-head { display:flex; justify-content:space-between; align-items:end; gap:12px; margin:36px 0 17px; }
+    h2 { margin:0; font-size:25px; letter-spacing:-.5px; }
+    .section-head p { margin:5px 0 0; color:var(--muted); }
+    .categories { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+    .category { display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:14px; padding:17px; font-weight:800; transition:transform .15s,box-shadow .15s; }
+    .category:hover,.product:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(15,23,42,.07); }
+    .category .icon { width:44px; height:44px; display:grid; place-items:center; background:#eff6ff; border-radius:12px; font-size:23px; }
+    .filters { display:flex; flex-wrap:wrap; gap:8px; }
+    .filter { padding:9px 13px; border:1px solid var(--line); border-radius:999px; background:#fff; cursor:pointer; font-weight:700; color:#475569; }
+    .filter.active { color:#fff; background:var(--brand); border-color:var(--brand); }
+    .products { display:grid; grid-template-columns:repeat(4,1fr); gap:17px; }
+    .product { background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; transition:transform .15s,box-shadow .15s; }
+    .product-image { height:175px; display:grid; place-items:center; font-size:64px; background:linear-gradient(135deg,#eef2ff,#f8fafc); }
+    .product-body { padding:15px; }
+    .tag { display:inline-block; background:#dcfce7; color:#166534; border-radius:5px; padding:4px 7px; font-size:11px; font-weight:800; text-transform:uppercase; }
+    .product h3 { font-size:16px; line-height:1.35; margin:10px 0 7px; }
+    .product p { font-size:13px; color:var(--muted); line-height:1.5; min-height:38px; margin:0 0 12px; }
+    .price-row { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+    .price { font-weight:900; font-size:16px; }
+    .buy { display:block; text-align:center; background:var(--brand); color:#fff; padding:10px 12px; border-radius:9px; font-size:13px; font-weight:800; margin-top:13px; }
+    .buy:hover { background:#1d4ed8; }
+    .disclaimer { background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; border-radius:12px; padding:15px 17px; margin-top:28px; font-size:13px; line-height:1.6; }
+    .about { margin-top:28px; background:#fff; border:1px solid var(--line); border-radius:16px; padding:23px; line-height:1.7; color:#475569; }
+    footer { background:#10213b; color:#cbd5e1; padding:28px 22px; text-align:center; font-size:13px; }
+    footer strong { color:white; }
+    .empty { display:none; padding:22px; color:var(--muted); text-align:center; background:#fff; border-radius:12px; }
+    @media(max-width:850px) { .hero { grid-template-columns:1fr; padding:30px; } .hero-art { min-height:130px; font-size:75px; } .categories,.products { grid-template-columns:repeat(2,1fr); } .nav { flex-wrap:wrap; gap:14px; } .search { order:3; flex-basis:100%; } }
+    @media(max-width:480px) { main { padding:18px 13px 40px; } .nav { padding:13px; } .logo { font-size:24px; } .hero { padding:24px 20px; } .categories,.products { gap:10px; } .category { padding:12px; gap:8px; font-size:13px; } .category .icon { width:36px;height:36px;font-size:19px; } .product-image { height:125px;font-size:48px; } .product-body { padding:11px; } .product h3 { font-size:14px; } .price-row { align-items:start; flex-direction:column; } }
+  </style>
+</head>
+<body>
+  <div class="notice">Discover useful finds and great-value products from around the world.</div>
+  <header>
+    <div class="nav">
+      <a class="logo" href="#" aria-label="ValuePick home">Value<span>Pick</span></a>
+      <form class="search" id="searchForm" role="search">
+        <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search products">
+        <button type="submit">Search</button>
+      </form>
+      <a class="nav-cta" href="#products">Explore picks ↓</a>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Welcome to ValuePick</div>
+        <h1>Great products.<br>Better value.</h1>
+        <p>Discover handy gadgets, everyday essentials, and interesting finds selected to help you shop smarter.</p>
+        <a class="button" href="#products">Explore our picks</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">🛍️📦</div>
+    </section>
+
+    <section aria-labelledby="categoriesTitle">
+      <div class="section-head">
+        <div><h2 id="categoriesTitle">Shop by category</h2><p>Browse the kinds of products you love.</p></div>
+      </div>
+      <div class="categories">
+        <a class="category" href="#products" data-category-link="Electronics"><span class="icon">🎧</span>Electronics</a>
+        <a class="category" href="#products" data-category-link="Fashion"><span class="icon">👟</span>Fashion</a>
+        <a class="category" href="#products" data-category-link="Home & Living"><span class="icon">🏡</span>Home &amp; Living</a>
+        <a class="category" href="#products" data-category-link="Accessories"><span class="icon">⌚</span>Accessories</a>
+      </div>
+    </section>
+
+    <section id="products" aria-labelledby="productsTitle">
+      <div class="section-head">
+        <div><h2 id="productsTitle">Featured picks</h2><p>Sample listings — replace these with products and your own affiliate links.</p></div>
+      </div>
+      <div class="filters" aria-label="Filter products">
+        <button class="filter active" data-filter="All">All picks</button>
+        <button class="filter" data-filter="Electronics">Electronics</button>
+        <button class="filter" data-filter="Fashion">Fashion</button>
+        <button class="filter" data-filter="Home & Living">Home &amp; Living</button>
+        <button class="filter" data-filter="Accessories">Accessories</button>
+      </div>
+      <div class="products" id="productGrid">
+        <article class="product" data-category="Electronics" data-search="wireless earbuds bluetooth audio electronics">
+          <div class="product-image" aria-hidden="true">🎧</div>
+          <div class="product-body"><span class="tag">Tech pick</span><h3>Wireless Earbuds</h3><p>A compact audio accessory for everyday listening.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Wireless Earbuds">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Accessories" data-search="smart watch fitness watch accessories wearable">
+          <div class="product-image" aria-hidden="true">⌚</div>
+          <div class="product-body"><span class="tag">Popular find</span><h3>Smart Watch</h3><p>A wearable accessory for notifications and activity tracking.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Smart Watch">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Home & Living" data-search="led desk lamp home living lighting study">
+          <div class="product-image" aria-hidden="true">💡</div>
+          <div class="product-body"><span class="tag">Home essential</span><h3>LED Desk Lamp</h3><p>A practical lighting idea for a desk or study corner.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="LED Desk Lamp">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Fashion" data-search="everyday sneakers shoes fashion casual">
+          <div class="product-image" aria-hidden="true">👟</div>
+          <div class="product-body"><span class="tag">Style pick</span><h3>Everyday Sneakers</h3><p>Casual footwear options for everyday outfits.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Everyday Sneakers">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Electronics" data-search="phone stand mobile holder electronics desk">
+          <div class="product-image" aria-hidden="true">📱</div>
+          <div class="product-body"><span class="tag">Useful gadget</span><h3>Adjustable Phone Stand</h3><p>A simple stand for video calls, viewing, or desk use.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Adjustable Phone Stand">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Home & Living" data-search="organizer storage home living drawer">
+          <div class="product-image" aria-hidden="true">🧺</div>
+          <div class="product-body"><span class="tag">Organise</span><h3>Storage Organiser</h3><p>Keep small household items tidy and easy to find.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Storage Organiser">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Accessories" data-search="backpack travel bag accessories school commute">
+          <div class="product-image" aria-hidden="true">🎒</div>
+          <div class="product-body"><span class="tag">Everyday carry</span><h3>Everyday Backpack</h3><p>A bag option for commuting, school, or short trips.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Everyday Backpack">View on AliExpress ↗</a></div>
+        </article>
+        <article class="product" data-category="Fashion" data-search="sunglasses fashion accessories style">
+          <div class="product-image" aria-hidden="true">🕶️</div>
+          <div class="product-body"><span class="tag">Style pick</span><h3>Classic Sunglasses</h3><p>A versatile accessory to complement casual looks.</p><div class="price-row"><span class="price">Check price</span></div><a class="buy affiliate-link" href="#" target="_blank" rel="sponsored nofollow noopener" data-product="Classic Sunglasses">View on AliExpress ↗</a></div>
+        </article>
+      </div>
+      <div class="empty" id="emptyState">No products match your search. Try another keyword.</div>
+    </section>
+
+    <div class="disclaimer"><strong>Affiliate disclosure:</strong> ValuePick may earn a commission when you buy through qualifying affiliate links, at no extra cost to you. Product details, availability, shipping costs, and prices can change; check the seller's listing before purchasing.</div>
+    <section class="about">
+      <h2>About ValuePick</h2>
+      <p>ValuePick helps shoppers discover useful products and compare options before buying. We aim to make product discovery simple for shoppers in Ghana and around the world. Always review seller ratings, product specifications, delivery terms, and return policies before placing an order.</p>
+      <p><strong>Contact:</strong> Add your business email or social media page here before publishing.</p>
+    </section>
+  </main>
+  <footer><strong>ValuePick</strong> — Great Products. Better Value.<br><br>© <span id="year"></span> ValuePick. Product links must be updated before launch.</footer>
+
+  <script>
+    const cards = [...document.querySelectorAll('.product')];
+    const filters = [...document.querySelectorAll('.filter')];
+    const searchInput = document.getElementById('searchInput');
+    const emptyState = document.getElementById('emptyState');
+    let activeCategory = 'All';
+
+    function updateProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      let visible = 0;
+      cards.forEach(card => {
+        const categoryMatch = activeCategory === 'All' || card.dataset.category === activeCategory;
+        const searchMatch = (card.dataset.search + ' ' + card.innerText).toLowerCase().includes(query);
+        const show = categoryMatch && searchMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+      emptyState.style.display = visible ? 'none' : 'block';
+    }
+
+    filters.forEach(button => button.addEventListener('click', () => {
+      activeCategory = button.dataset.filter;
+      filters.forEach(item => item.classList.toggle('active', item === button));
+      updateProducts();
+    }));
+
+    document.querySelectorAll('[data-category-link]').forEach(link => link.addEventListener('click', () => {
+      activeCategory = link.dataset.categoryLink;
+      filters.forEach(item => item.classList.toggle('active', item.dataset.filter === activeCategory));
+      updateProducts();
+    }));
+
+    document.getElementById('searchForm').addEventListener('submit', event => {
+      event.preventDefault();
+      updateProducts();
+      document.getElementById('products').scrollIntoView({behavior:'smooth'});
+    });
+    searchInput.addEventListener('input', updateProducts);
+
+    // Add your real affiliate URL to each product's data-affiliate attribute or replace href="#".
+    document.querySelectorAll('.affiliate-link').forEach(link => link.addEventListener('click', event => {
+      if (link.getAttribute('href') === '#') {
+        event.preventDefault();
+        alert('This is a sample product button. Add your approved AliExpress affiliate link before publishing.');
+      }
+    }));
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
